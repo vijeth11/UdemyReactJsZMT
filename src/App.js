@@ -1,12 +1,13 @@
 import {React,Component} from 'react';
 import { CardList } from './component/card-list/card-list.component';
 import './App.css';
+import { SearchInput } from './component/search-box/search-box.component';
 
 class App extends Component{
   constructor(){
     super();
     this.state={
-      string:'Hello vijeth',
+      searchField:'',
       monsters:[]
     }
   }
@@ -17,17 +18,21 @@ class App extends Component{
     .then(response => {this.setState({...this.state, monsters:response}); console.log(response);})
   }
 
+  handleChange = (event) => {
+    this.setState({...this.state,searchField:event.target.value })
+  }
+
   render(){
-    return(
+    const {monsters, searchField} = this.state;
+    const filteredMonsters = monsters.filter(monster => monster.name.toLowerCase().includes(searchField))
+    return(    
     <div className="App">
-      <CardList name="test">
-      {
-       this.state.monsters.map(monster => {
-          return (<h1 key={monster.id}> {monster.name }</h1>)
-       })
-     }
-      </CardList>     
-   </div>
+      <h1> Monsters Rolodex </h1>
+      <SearchInput
+      placeholder="search monsters" 
+      handleChange = {this.handleChange}></SearchInput>
+      <CardList monsters={filteredMonsters}></CardList>     
+    </div>
    ); 
   }
 }
@@ -48,5 +53,23 @@ We can only set state directly in constructor because it calls render automatica
  of the html with the 'key' for which data has been changed in the state by a function or third party due to which the
  heavy lifting of re-rendering each and every elemnt in the list just for change of one elemnt in an array is escaped
  thus making react smoother. 
+*/
+
+/*
+npm run eject command creates a prod build version of thereact application where everything is compiled into js and html 
+files. (like ng b --prod in angular)
+*/
+
+/*
+if a console.log method is added to display state right after the setState method we cannot see the change in the state object
+as the setState function is async function we need to pass a callback function as second argument to setState and retrieve new updated state
+example setState({...state,searchField:name},() => console.log(this.state))
+*/
+
+/*
+Arrow function will lexically scope the source class instance to 'this' keyword meaning instance of the class where the arrow function
+is defined. on other habd the normal function inside JS class when passed as an argument it does not bing the source class instance to 'this'
+keyword used in the function due to where it will throw error when called so inOrder to over come this we can add .bind(this) to the function 
+while passing as argument so that the source class instance is set as the context of 'this' keyword when called.   
 */
 export default App;
