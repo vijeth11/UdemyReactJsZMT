@@ -49,6 +49,23 @@ We can only set state directly in constructor because it calls render automatica
 */
 
 /*
+The content of a React component (usually) needs to contain one root element. If we, for example, try to 
+define the component App without the outermost div-element it will throw error
+*/
+
+/*
+Component can return an array of components as well like:
+const App = () => {
+  return [
+    <h1>Greetings</h1>,
+    <Hello name="Maya" age={26 + 10} />,
+    <Footer />
+  ]
+}
+instead of returning html
+*/
+
+/*
  react needs keyword 'key'  when dealing with list is because. It gives react a knowledge to re-render only the part 
  of the html with the 'key' for which data has been changed in the state by a function or third party due to which the
  heavy lifting of re-rendering each and every elemnt in the list just for change of one elemnt in an array is escaped
@@ -56,7 +73,7 @@ We can only set state directly in constructor because it calls render automatica
 */
 
 /*
-npm run eject command creates a prod build version of thereact application where everything is compiled into js and html 
+npm run eject command creates a prod build version of the react application where everything is compiled into js and html 
 files. (like ng b --prod in angular)
 */
 
@@ -68,8 +85,8 @@ example setState({...state,searchField:name},() => console.log(this.state))
 
 /*
 Arrow function will lexically scope the source class instance to 'this' keyword meaning instance of the class where the arrow function
-is defined. on other habd the normal function inside JS class when passed as an argument it does not bing the source class instance to 'this'
-keyword used in the function due to where it will throw error when called so inOrder to over come this we can add .bind(this) to the function 
+is defined. on other hand the normal function inside JS class when passed as an argument it does not bing the source class instance to 'this'
+keyword used in the function due to where it will throw error when called so in Order to over come this we can add .bind(this) to the function 
 while passing as argument so that the source class instance is set as the context of 'this' keyword when called.   
 */
 export default App;

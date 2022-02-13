@@ -4,7 +4,7 @@ import { Card } from '../card/card.component';
 
 export const CardList = (props) => {
     console.log(props);
-    //props constains all the inputs passed to the component 
+    //props contains all the inputs passed to the component 
     //props.children will contain the html elements defined between this component selectors whenever used (ex:app.js)
     //
     return (
@@ -15,3 +15,8 @@ export const CardList = (props) => {
       }</div>
     );
 }
+
+//Note:
+/*
+* Also keep in mind that React component names must be capitalized.
+*/
