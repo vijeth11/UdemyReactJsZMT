@@ -42,7 +42,8 @@ class App extends Component{
 /* the reason why setState needs to be called if we want to update a state bcz
 data modification in react works in a unidirection. So when a click event happens 
 react listenes to it and checks for what needs to be done. Once it finds out they have called setState 
-it executes this method. In this method it uses new value of state passed as argument and updates the 
+it executes this method. In this method it uses new value of state passed as argument and 
+shallow updates (change the values in state obj only for keys mentioned in new value) the 
 state object. After that it calls render function so that react can now use the updated state object and 
 re-render dom with new changes. Due to this it is mandatory to update state via setState method and not directly.
 We can only set state directly in constructor because it calls render automatically in constructor for first time.
@@ -75,6 +76,16 @@ instead of returning html
 /*
 npm run eject command creates a prod build version of the react application where everything is compiled into js and html 
 files. (like ng b --prod in angular)
+*/
+
+/*
+componentDidMount is the function which is called when the component is mounted for the first time and it just like ngOnInit
+in angular. so it runs only once at during component mounting
+*/
+
+/*
+  order of execution
+  Constructor->render->componentDidMount
 */
 
 /*
