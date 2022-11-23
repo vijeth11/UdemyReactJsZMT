@@ -78,10 +78,23 @@ npm run eject command creates a prod build version of the react application wher
 files. (like ng b --prod in angular)
 */
 
+/****** Life Cycle Hooks of Class based ******/ 
 /*
 componentDidMount is the function which is called when the component is mounted for the first time and it just like ngOnInit
 in angular. so it runs only once at during component mounting
 */
+
+/*
+ componentDidUpdate is the function which is called when new props are sent or setState is called or forceUpdate is called 
+ which re-calls render like ngOnChanges in angular 
+*/
+
+/*
+componentWillUnmount is the function which is called when the componen unmounts. It is used to clear the listners
+it is similar to ngOnDestroy in angular
+*/
+
+/***************/
 
 /*
   order of execution
