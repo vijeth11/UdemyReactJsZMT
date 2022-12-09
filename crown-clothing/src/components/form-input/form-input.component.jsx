@@ -1,15 +1,15 @@
 import { Component } from "react";
-
+import './form-input.style.scss';
 class FormInput extends Component{
     render(){
         const {label, ...otherProps} = this.props;
         return(
             <div className="group">
-            { 
-            label &&
-            <label className={`${otherprops.value.length ? 'shrink':''} form-input-label`}>{label}</label>
-            }
-            <input className="form-input" {...otherProps} />
+                <input className="form-input" {...otherProps} />
+                { 
+                label &&
+                <label className={`${otherProps.value.length ? 'shrink':''} form-input-label`}>{label}</label>
+                }                
             </div>
         );
     }
