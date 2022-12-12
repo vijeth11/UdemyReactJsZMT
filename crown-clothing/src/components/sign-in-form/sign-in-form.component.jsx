@@ -1,6 +1,5 @@
-import { getRedirectResult } from "firebase/auth";
 import { Component } from "react";
-import { auth, createUserDocumentFromAuth, signInUserWithEmailAndPassword, signInWithGoogleRedirect } from "../../utils/firebase/firebase.utils";
+import { signInUserWithEmailAndPassword, signInWithGoogleRedirect } from "../../utils/firebase/firebase.utils";
 import Button from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss';
@@ -9,13 +8,13 @@ class SignInForm extends Component{
     formInitialState = {
         email: '',
         password:'',
-    };
-
+    };    
+    
     constructor(){
         super();
         this.state= {...this.formInitialState};
       }
-    
+
     resetFormFields(){
         this.setState({...this.formInitialState});
     }
@@ -24,17 +23,18 @@ class SignInForm extends Component{
         await signInWithGoogleRedirect();
     }
 
-    async componentDidMount() {
-        const response = await getRedirectResult(auth);
-        if(response){
-            createUserDocumentFromAuth(response.user);
-        }
-    }
+    // async componentDidMount() {
+    //     const response = await getRedirectResult(auth);
+    //     if(response){
+    //         createUserDocumentFromAuth(response.user);
+    //     }
+
+    // }
 
     formSubmit = async (event) =>{
         event.preventDefault();
         try{
-            const response = await signInUserWithEmailAndPassword({email:this.state.email, password:this.state.password});
+            const {user} = await signInUserWithEmailAndPassword({email:this.state.email, password:this.state.password});
             this.resetFormFields();
         }catch(error){
             switch(error.code){
@@ -54,7 +54,6 @@ class SignInForm extends Component{
     handleChange=(event)=>{
         const {name, value} = event.target;
         this.setState({...this.state,[name]:value});
-        console.log(this.state);
     }
 
     render(){

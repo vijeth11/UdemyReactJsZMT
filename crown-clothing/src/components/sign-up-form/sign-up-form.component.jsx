@@ -16,20 +16,20 @@ class SignUpForm extends Component{
         super();
         this.state= {...this.formInitialState};
       }
-    
+
     resetFormFields(){
         this.setState({...this.formInitialState});
     }
 
     formSubmit = async (event) =>{
         event.preventDefault();
-        if(this.state.password == this.state.confirmPassword){      
+        if(this.state.password === this.state.confirmPassword){      
             try{  
-            let {user} =  await creatAuthUserWithEmailAndPassword({email:this.state.email, password:this.state.password});
-            await createUserDocumentFromAuth(user,{displayName:this.state.displayName});
+            const {user} =  await creatAuthUserWithEmailAndPassword({email:this.state.email, password:this.state.password});
+            await createUserDocumentFromAuth(user,{displayName:this.state.displayName});            
             this.resetFormFields();
             }catch(error){
-                if(error.code == 'auth/email-already-in-use'){
+                if(error.code === 'auth/email-already-in-use'){
                     alert('Cannot create user, email already in use');
                 }else{
                     console.log("Fail to login", error);
@@ -44,10 +44,10 @@ class SignUpForm extends Component{
     handleChange=(event)=>{
         const {name, value} = event.target;
         this.setState({...this.state,[name]:value});
-        console.log(this.state);
     }
 
     render(){
+        console.log(this.context);
         const {displayName, email, password, confirmPassword } = this.state;
         return (
         <div className="sign-up-container">
@@ -89,5 +89,4 @@ class SignUpForm extends Component{
         );
     }
 }
-
 export default SignUpForm;

@@ -43,5 +43,10 @@ instead of path the attribute in child Route use index like
 this will render the content of the Shop component in place of Outlet Tag along with content of parent 
 componet whenever the parent path is reached. 
 note: If you define multiple index children routes only first will be rendered
+
+Context is used to store data at app level so any leaf node (component) can use it by calling context.
+Instead of having to pass the data to parent components all the way up to app and then to child component
+in sibbling component via props which is too much data passing between component which does not need them.
+This is similar to using Store/Service in angular. 
 */
 export default App;
