@@ -34,7 +34,7 @@ class SignInForm extends Component{
     formSubmit = async (event) =>{
         event.preventDefault();
         try{
-            const {user} = await signInUserWithEmailAndPassword({email:this.state.email, password:this.state.password});
+            await signInUserWithEmailAndPassword({email:this.state.email, password:this.state.password});
             this.resetFormFields();
         }catch(error){
             switch(error.code){
