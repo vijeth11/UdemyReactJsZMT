@@ -3,7 +3,17 @@ import { CartContext } from "../../context/cart.context";
 import Button from "../button/button.component";
 import CartItem from "../cart-item/cart-item.component";
 import './cart-dropdown.style.scss';
+import { Navigate } from "react-router-dom";
 class CartDropdown extends Component{
+
+    constructor(){
+        super();
+        this.state = { navigate: false};
+    }
+    handleClick = () => {
+        this.setState({navigate:true})
+    }
+
     render(){
         const {cartItems }  = this.context;
         return (
@@ -13,7 +23,8 @@ class CartDropdown extends Component{
                         cartItems.map(item => <CartItem key = {item.id} cartItem = {item}/>)
                     }
                 </div>
-                <Button>GO TO CHECKOUT</Button>
+                {this.state.navigate && <Navigate to="/checkout" replace={true} />}
+                <Button onClick={this.handleClick}>GO TO CHECKOUT</Button>
             </div>
         );
     }
