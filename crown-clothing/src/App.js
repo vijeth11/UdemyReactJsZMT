@@ -1,5 +1,6 @@
 import {Component} from 'react';
 import {Route, Routes } from 'react-router-dom';
+import { CartContext } from './context/cart.context';
 import Authentication from './routes/Authentication/authentication.component';
 import Home from './routes/home/home.component';
 import Navigation from './routes/navigation/navigation.component';
@@ -9,7 +10,11 @@ class App extends Component{
   render() {
     return (
       <Routes>
-        <Route path = '/' element={<Navigation/>}>
+        <Route path = '/' element={<CartContext.Consumer>
+                                    { 
+                                      cart => (<Navigation cartContext={cart}/>)
+                                    }</CartContext.Consumer>
+                                  }>
           <Route index element={<Home/>}/>
           <Route path='shop' element={<Shop/>}/>
           <Route path='auth' element={<Authentication/>}/>
