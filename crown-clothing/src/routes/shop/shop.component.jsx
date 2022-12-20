@@ -1,21 +1,18 @@
 import { Component } from "react";
-import ProductCardComponent from "../../components/product-card/product-card.component";
-import { ProductContext } from "../../context/product.context";
+import { Route, Routes } from "react-router-dom";
+import CategoriesPreview from "../categories-preview/categories-preview.component";
+import Category from "../category/category.component";
 import './shop.style.scss';
 class Shop extends Component{
-
     render(){
-        let shop_data = this.context;
         return (
-            <div className="products-container">
-                {
-                    shop_data.map(product => (
-                        <ProductCardComponent key={product.id} productData={product}></ProductCardComponent>)
-                        )
-                }
-            </div>
+            <Routes>
+                <Route index element = {<CategoriesPreview/>}/>
+                <Route path=":category" element= {<Category/>}/>
+            </Routes>
         );
     }
+   
 }
-Shop.contextType = ProductContext;
+
 export default Shop;

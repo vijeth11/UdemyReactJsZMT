@@ -17,7 +17,7 @@ class App extends Component{
                                     }</CartContext.Consumer>
                                   }>
           <Route index element={<Home/>}/>
-          <Route path='shop' element={<Shop/>}/>
+          <Route path='shop/*' element={<Shop/>}/>
           <Route path='auth' element={<Authentication/>}/>
           <Route path='checkout' element={<Checkout/>}/>
         </Route>
@@ -55,5 +55,11 @@ Context is used to store data at app level so any leaf node (component) can use 
 Instead of having to pass the data to parent components all the way up to app and then to child component
 in sibbling component via props which is too much data passing between component which does not need them.
 This is similar to using Store/Service in angular. 
+
+To Pass MultipleContext to a Component we need to wrap the component with extra ContextConsumer and pass the context 
+value as an attribute (ex: NavigationComponent) 
+
+we can have nested routes inside of a component but we need to provide a wild path with '*' in main route like Shop
+Inside Shop we have multiple child route wrapped with routes component.
 */
 export default App;
