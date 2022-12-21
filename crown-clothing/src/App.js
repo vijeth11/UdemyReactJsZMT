@@ -61,5 +61,8 @@ value as an attribute (ex: NavigationComponent)
 
 we can have nested routes inside of a component but we need to provide a wild path with '*' in main route like Shop
 Inside Shop we have multiple child route wrapped with routes component.
+
+Styled Component is a library used to convert styles into a component and use them in the Component 
+look at Button and Navigation component for sample
 */
 export default App;

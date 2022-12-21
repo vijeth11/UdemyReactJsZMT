@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { CartContext } from "../../context/cart.context";
-import Button from "../button/button.component";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import './product-card.style.scss';
 
 class ProductCardComponent extends Component{
@@ -18,7 +18,7 @@ class ProductCardComponent extends Component{
                     <span className="name">{name}</span>
                     <span className="price">{price}</span>
                 </div>
-                <Button buttonType='inverted' onClick = {this.handleClick}>Add to Cart</Button>
+                <Button buttonType={BUTTON_TYPE_CLASSES.inverted} onClick = {this.handleClick}>Add to Cart</Button>
             </div>
         );
     }
