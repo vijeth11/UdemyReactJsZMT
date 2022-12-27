@@ -1,11 +1,16 @@
 import { Component, Fragment } from "react";
+import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { ReactComponent as CrownLogo } from '../../assets/crown.svg';
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
-import { UserContext } from "../../context/user.context";
+import { selectCurrentUser } from "../../store/user/user.selector";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 import {LogoContainer, NavigationContainer, NavLinks,  NavLink} from './navigation.styles.jsx';
+
+const withParams = (Component) => {
+  return (props) => <Component {...props} currentUser = {useSelector(selectCurrentUser)}/>
+}
 
 class Navigation extends Component{
 
@@ -15,7 +20,7 @@ class Navigation extends Component{
   }
 
     render(){
-      const {currentUser} = this.context;
+      const {currentUser} = this.props;
       const {isCartOpen} = this.props.cartContext;
       return (
         <Fragment>
@@ -40,5 +45,4 @@ class Navigation extends Component{
       );
     }
   }
-  Navigation.contextType = UserContext;
-  export default Navigation;
+  export default withParams(Navigation);
