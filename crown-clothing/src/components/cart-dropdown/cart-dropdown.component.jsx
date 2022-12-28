@@ -1,9 +1,12 @@
 import { Component } from "react";
-import { CartContext } from "../../context/cart.context";
 import Button from "../button/button.component";
 import CartItem from "../cart-item/cart-item.component";
 import './cart-dropdown.style.scss';
 import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCartItems } from "../../store/cart/cart.selector";
+import { withParams } from "../../utils/util/withParams.util";
+
 class CartDropdown extends Component{
 
     constructor(){
@@ -15,7 +18,7 @@ class CartDropdown extends Component{
     }
 
     render(){
-        const {cartItems }  = this.context;
+        const {cartItems }  = this.props;
         return (
             <div className="cart-dropdown-container">
                 <div className="cart-items">
@@ -32,5 +35,4 @@ class CartDropdown extends Component{
     }
 }
 
-CartDropdown.contextType = CartContext;
-export default CartDropdown
+export default withParams(CartDropdown,()=>({cartItems: useSelector(selectCartItems)}))

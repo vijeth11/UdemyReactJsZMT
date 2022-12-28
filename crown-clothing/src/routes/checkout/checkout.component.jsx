@@ -1,12 +1,14 @@
 import { Component } from "react";
+import { useSelector } from "react-redux";
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
-import { CartContext } from "../../context/cart.context";
+import { selectCartItems, selectCartTotal } from "../../store/cart/cart.selector";
+import { withParams } from "../../utils/util/withParams.util";
 import './checkout.style.scss';
 
 class Checkout extends Component{
 
     render(){
-        const {cartItems, cartTotal}  = this.context;
+        const {cartItems, cartTotal}  = this.props;
         return (
             <div className="checkout-container">
                 <div className="checkout-header">
@@ -34,5 +36,9 @@ class Checkout extends Component{
         );
     }
 }
-Checkout.contextType = CartContext;
-export default Checkout;
+
+export default withParams(Checkout,() =>(
+    {
+        cartItems:useSelector(selectCartItems), 
+        cartTotal:useSelector(selectCartTotal)
+    }));

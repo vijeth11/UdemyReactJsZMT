@@ -1,12 +1,14 @@
 import { Component } from "react";
-import { CartContext } from "../../context/cart.context";
+import { useDispatch } from "react-redux";
+import { addCartItem } from "../../store/cart/cart.action";
+import { withParams } from "../../utils/util/withParams.util";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import './product-card.style.scss';
 
 class ProductCardComponent extends Component{
 
     handleClick = () => {
-        this.context.addItemToCart(this.props.productData);
+        this.props.dispatch(addCartItem(this.props.productData));
      }
     render(){
         let {productData} = this.props;
@@ -23,5 +25,5 @@ class ProductCardComponent extends Component{
         );
     }
 }
-ProductCardComponent.contextType = CartContext;
-export default ProductCardComponent;
+
+export default withParams(ProductCardComponent, ()=>({dispatch: useDispatch()}));

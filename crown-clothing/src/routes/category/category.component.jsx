@@ -2,11 +2,8 @@ import { Component, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import ProductCardComponent from "../../components/product-card/product-card.component";
 import { CategoriesContext } from "../../context/categories.context";
+import { withParams } from "../../utils/util/withParams.util";
 import './category.style.scss';
-
-const withParams = (Component) => {
-    return props => <Component {...props} params = {useParams()} />
-} 
 
 class Category extends Component{
     constructor(){
@@ -39,4 +36,4 @@ class Category extends Component{
     }
 }
 Category.contextType = CategoriesContext;
-export default withParams(Category);
+export default withParams(Category,()=>({params:useParams()}));

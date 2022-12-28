@@ -4,13 +4,11 @@ import { Outlet } from "react-router-dom";
 import { ReactComponent as CrownLogo } from '../../assets/crown.svg';
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
+import { selectIsCartOpen } from "../../store/cart/cart.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
+import { withParams } from "../../utils/util/withParams.util";
 import {LogoContainer, NavigationContainer, NavLinks,  NavLink} from './navigation.styles.jsx';
-
-const withParams = (Component) => {
-  return (props) => <Component {...props} currentUser = {useSelector(selectCurrentUser)}/>
-}
 
 class Navigation extends Component{
 
@@ -20,8 +18,7 @@ class Navigation extends Component{
   }
 
     render(){
-      const {currentUser} = this.props;
-      const {isCartOpen} = this.props.cartContext;
+      const {currentUser, isCartOpen} = this.props;
       return (
         <Fragment>
           <NavigationContainer>
@@ -45,4 +42,8 @@ class Navigation extends Component{
       );
     }
   }
-  export default withParams(Navigation);
+  export default withParams(Navigation,()=>(
+    {
+      currentUser:useSelector(selectCurrentUser), 
+      isCartOpen: useSelector(selectIsCartOpen)
+    }));

@@ -1,7 +1,6 @@
 import {Component} from 'react';
 import { useDispatch } from 'react-redux';
 import {Route, Routes } from 'react-router-dom';
-import { CartContext } from './context/cart.context';
 import Authentication from './routes/Authentication/authentication.component';
 import Checkout from './routes/checkout/checkout.component';
 import Home from './routes/home/home.component';
@@ -9,10 +8,8 @@ import Navigation from './routes/navigation/navigation.component';
 import Shop from './routes/shop/shop.component';
 import { setCurrentUser } from './store/user/user.action';
 import { createUserDocumentFromAuth, onAuthStateChangedListner } from './utils/firebase/firebase.utils';
+import { withParams } from './utils/util/withParams.util';
 
-const withParams = (Component) => {
-  return props => <Component {...props} dispatch = {useDispatch()}/>
-} 
 class App extends Component{
 
   componentDidMount(){
@@ -31,11 +28,7 @@ class App extends Component{
   render() {
     return (
       <Routes>
-        <Route path = '/' element={<CartContext.Consumer>
-                                    { 
-                                      cart => (<Navigation cartContext={cart}/>)
-                                    }</CartContext.Consumer>
-                                  }>
+        <Route path = '/' element={<Navigation/>}>
           <Route index element={<Home/>}/>
           <Route path='shop/*' element={<Shop/>}/>
           <Route path='auth' element={<Authentication/>}/>
@@ -85,4 +78,4 @@ Inside Shop we have multiple child route wrapped with routes component.
 Styled Component is a library used to convert styles into a component and use them in the Component 
 look at Button and Navigation component for sample
 */
-export default withParams(App);
+export default withParams(App,()=>({dispatch:useDispatch()}));
