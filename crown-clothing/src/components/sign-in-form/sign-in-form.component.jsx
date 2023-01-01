@@ -1,5 +1,7 @@
 import { Component } from "react";
-import { signInUserWithEmailAndPassword, signInWithGoogleRedirect } from "../../utils/firebase/firebase.utils";
+import { useDispatch } from "react-redux";
+import { emailSignInStart, googleSignInStart } from "../../store/user/user.action";
+import { withParams } from "../../utils/util/withParams.util";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss';
@@ -19,8 +21,8 @@ class SignInForm extends Component{
         this.setState({...this.formInitialState});
     }
 
-    async signInWithGoogle(){
-        await signInWithGoogleRedirect();
+    signInWithGoogle = async() => {
+        this.props.dispatch(googleSignInStart())
     }
 
     // async componentDidMount() {
@@ -34,7 +36,7 @@ class SignInForm extends Component{
     formSubmit = async (event) =>{
         event.preventDefault();
         try{
-            await signInUserWithEmailAndPassword({email:this.state.email, password:this.state.password});
+            this.props.dispatch(emailSignInStart(this.state.email, this.state.password));
             this.resetFormFields();
         }catch(error){
             switch(error.code){
@@ -92,4 +94,4 @@ class SignInForm extends Component{
     }
 }
 
-export default SignInForm;
+export default withParams(SignInForm, ()=>({dispatch: useDispatch()}));

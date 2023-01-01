@@ -1,5 +1,8 @@
 import { Component } from "react";
+import { useDispatch } from "react-redux";
+import { signUpStart } from "../../store/user/user.action";
 import { creatAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
+import { withParams } from "../../utils/util/withParams.util";
 import Button from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
 import './sign-up-form.styles.scss';
@@ -25,8 +28,9 @@ class SignUpForm extends Component{
         event.preventDefault();
         if(this.state.password === this.state.confirmPassword){      
             try{  
-            const {user} =  await creatAuthUserWithEmailAndPassword({email:this.state.email, password:this.state.password});
-            await createUserDocumentFromAuth(user,{displayName:this.state.displayName});            
+            // const {user} =  await creatAuthUserWithEmailAndPassword({email:this.state.email, password:this.state.password});
+            // await createUserDocumentFromAuth(user,{displayName:this.state.displayName});  
+            this.props.dispatch(signUpStart(this.state.email,this.state.password,this.state.displayName));          
             this.resetFormFields();
             }catch(error){
                 if(error.code === 'auth/email-already-in-use'){
@@ -89,4 +93,4 @@ class SignUpForm extends Component{
         );
     }
 }
-export default SignUpForm;
+export default withParams(SignUpForm,()=>({dispatch:useDispatch()}));

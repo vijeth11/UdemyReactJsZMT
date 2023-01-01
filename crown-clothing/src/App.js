@@ -6,23 +6,13 @@ import Checkout from './routes/checkout/checkout.component';
 import Home from './routes/home/home.component';
 import Navigation from './routes/navigation/navigation.component';
 import Shop from './routes/shop/shop.component';
-import { setCurrentUser } from './store/user/user.action';
-import { createUserDocumentFromAuth, onAuthStateChangedListner } from './utils/firebase/firebase.utils';
+import { checkUserSession } from './store/user/user.action';
 import { withParams } from './utils/util/withParams.util';
 
 class App extends Component{
 
   componentDidMount(){
-    this.unSubscribe = onAuthStateChangedListner((user) => {
-      if(user){
-        createUserDocumentFromAuth(user);
-      }
-      this.props.dispatch(setCurrentUser(user));
-    });
-  }
-
-  componentWillUnmount(){
-    if(this.unSubscribe)this.unSubscribe();
+    this.props.dispatch(checkUserSession())
   }
 
   render() {
