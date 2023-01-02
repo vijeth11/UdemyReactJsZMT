@@ -44,7 +44,7 @@ const composedEnhancers = composeEnhancer(applyMiddleware(...middleWares));
 
 export const store = createStore(persistedReducer, undefined, composedEnhancers);
 
-sagaMiddleware.run(rootSaga);
+//sagaMiddleware.run(rootSaga);
 
 // persist store is used to retain the redux-store in the localStorage of browser
 // so when user refreshes the browser still his data is retained and not lost 
