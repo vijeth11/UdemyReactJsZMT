@@ -1,4 +1,4 @@
-import {createStore, applyMiddleware} from 'redux';
+import {compose, createStore, applyMiddleware} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -37,9 +37,10 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const middleWares = process.env.NODE_ENV === 'development'? [logger, loggerMiddleware, thunk, sagaMiddleware] : [];
 
 // telling browser to use Redux Devtools if it exsits for looking at changes if not use regular compose 
-//const composeEnhancer = (process.env.NODE_ENV === 'development' && window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+const composeEnhancer = (process.env.NODE_ENV === 'development' && window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 //const composeEnhancer =  compose;
-const composedEnhancers = composeWithDevTools(applyMiddleware(...middleWares));
+const composedEnhancers = composeEnhancer(applyMiddleware(...middleWares));
+//const composedEnhancers = composeWithDevTools(applyMiddleware(...middleWares));
 
 export const store = createStore(persistedReducer, undefined, composedEnhancers);
 
