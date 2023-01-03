@@ -1,11 +1,15 @@
-import {React,Component} from 'react';
+import { ChangeEvent, Component} from 'react';
 import { CardList } from './component/card-list/card-list.component';
 import './App.css';
 import { SearchInput } from './component/search-box/search-box.component';
+import { getData } from './utils/data.utils';
+import { Monster } from './types/types';
 
-class App extends Component{
-  constructor(){
-    super();
+
+
+class App extends Component<{},{searchField:string, monsters:Monster[]}>{
+  constructor(props:Readonly<{}> | {}){
+    super(props);
     this.state={
       searchField:'',
       monsters:[]
@@ -13,12 +17,11 @@ class App extends Component{
   }
 
   componentDidMount(){
-    fetch('https://jsonplaceholder.typicode.com/users')
-    .then(response => response.json())
+    getData<Monster[]>('https://jsonplaceholder.typicode.com/users')
     .then(response => {this.setState({...this.state, monsters:response}); console.log(response);})
   }
 
-  handleChange = (event) => {
+  handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     this.setState({...this.state,searchField:event.target.value })
   }
 

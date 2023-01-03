@@ -1,7 +1,7 @@
-import React from 'react';
+import { Monster } from '../../types/types';
 import './card.styles.css';
 
-export const Card = (prop) => {
+export const Card = (prop:{monster:Monster}) => {
     return (
         <div className='card-container'>
             <img alt="monster" src={`https://robohash.org/${prop.monster.id}?set=set2&size=180x180`}/>
