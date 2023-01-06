@@ -1,6 +1,5 @@
 import {compose, createStore, applyMiddleware} from 'redux';
-import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
-import { persistStore, persistReducer } from 'redux-persist';
+import { persistStore, persistReducer, PersistConfig } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import logger from 'redux-logger';
@@ -24,11 +23,23 @@ import { rootSaga } from './root-saga';
 //like some http call and retrieve data then trigger an action which sets 
 //data and updates the state. In this project it is not used yet only middleware is added
 //refer course for more info
-const persistConfig = {
+type ExtendedPersistConfig = PersistConfig<RootState> & {
+    blacklist:(keyof RootState)[]
+}
+
+const persistConfig:ExtendedPersistConfig = {
     key:'root',
     storage,
     blacklist:['user'],
 }
+
+declare global {
+    interface Window {
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose
+    }
+}
+
+export type RootState = ReturnType<typeof rootReducer>;
 
 const sagaMiddleware = createSagaMiddleware();
 

@@ -2,12 +2,12 @@ import { Component } from "react";
 import './button.style.jsx';
 import { BaseButton, ButtonSpinner, GoogleSignInButton, InvertedButton } from "./button.style.jsx";
 
-export const BUTTON_TYPE_CLASSES = {
-    google: 'google-sign-in',
-    inverted: 'inverted',
-    base: 'base'
+export enum BUTTON_TYPE_CLASSES {
+    google= 'google-sign-in',
+    inverted= 'inverted',
+    base= 'base'
 };
-class Button extends Component{
+class Button extends Component<{children:Component, buttonType:BUTTON_TYPE_CLASSES, isLoading:boolean,otherProps:any}>{
     
     getButton(buttonType = BUTTON_TYPE_CLASSES.base) {
         return {

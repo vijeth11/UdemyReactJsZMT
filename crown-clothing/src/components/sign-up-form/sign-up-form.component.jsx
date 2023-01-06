@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { useDispatch } from "react-redux";
 import { signUpStart } from "../../store/user/user.action";
-import { creatAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
 import { withParams } from "../../utils/util/withParams.util";
 import Button from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
