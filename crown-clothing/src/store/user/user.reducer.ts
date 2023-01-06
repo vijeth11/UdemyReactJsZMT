@@ -1,5 +1,10 @@
 import { AnyAction } from "redux";
-import { signInFailure, signInSuccess, signOutFailed, signOutSuccess, signUpFailed } from "./user.action";
+import { 
+    signInFailure, 
+    signInSuccess, 
+    signOutFailed, 
+    signOutSuccess, 
+    signUpFailed } from "./user.action";
 import { UserData } from "./user.types";
 
 export type UserState = {
