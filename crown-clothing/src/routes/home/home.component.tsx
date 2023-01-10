@@ -1,9 +1,10 @@
 import { Component } from "react";
 import { Outlet } from "react-router-dom";
 import Directories from "../../components/Directories/directories.component";
+import { DirectoryItemModel } from "../../store/cart/cart.types";
 
 class Home extends Component{
-    categories = [
+    categories:DirectoryItemModel[] = [
         {
           "id": 1,
           "title": "hats",

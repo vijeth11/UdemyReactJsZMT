@@ -5,7 +5,7 @@ REMOVE_CART_ITEM = 'cart/REMOVE_CART_ITEM',
 CLEAR_CART_ITEM ="cart/CLEAR_CART_ITEMS",
 }
 
-export type CartItem = CategoryItem & {
+export type CartItemModel = CategoryItem & {
     quantity: number;
 };
 
@@ -23,4 +23,10 @@ export type Category = {
 
 export type CategoryMap = {
     [key:string]:CategoryItem[]
+}
+
+export type DirectoryItemModel={
+    id:number;
+    title:string;
+    imageUrl:string;
 }

@@ -1,6 +1,11 @@
-import { Component } from "react";
+import { Component, InputHTMLAttributes } from "react";
 import './form-input.style.scss';
-class FormInput extends Component{
+
+type InputFormProps = {
+    label:string 
+} & InputHTMLAttributes<HTMLInputElement>;
+
+class FormInput extends Component<InputFormProps,{}>{
     render(){
         const {label, ...otherProps} = this.props;
         return(
@@ -8,7 +13,7 @@ class FormInput extends Component{
                 <input className="form-input" {...otherProps} />
                 { 
                 label &&
-                <label className={`${otherProps.value.length ? 'shrink':''} form-input-label`}>{label}</label>
+                <label className={`${otherProps.value?.toString().length ? 'shrink':''} form-input-label`}>{label}</label>
                 }                
             </div>
         );

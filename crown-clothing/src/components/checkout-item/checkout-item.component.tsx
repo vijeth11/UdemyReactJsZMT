@@ -1,10 +1,12 @@
-import { Component } from "react";
+import { Component, Dispatch } from "react";
 import { useDispatch } from "react-redux";
+import { AnyAction } from "redux";
 import { addCartItem, clearCartItem, removeCartItem } from "../../store/cart/cart.action";
+import { CartItemModel } from "../../store/cart/cart.types";
 import { withParams } from "../../utils/util/withParams.util";
 import './checkout-item.style.scss';
 
-class CheckoutItem extends Component{
+class CheckoutItem extends Component<{dispatch:Dispatch<AnyAction>, cartItem:CartItemModel}>{
     render() {
         // &#x2715;  (dingbats)
         const {dispatch} = this.props;
@@ -25,4 +27,4 @@ class CheckoutItem extends Component{
         );
     }
 }
-export default withParams(CheckoutItem,() =>({dispatch: useDispatch(),}));
+export default withParams<{},{cartItem:CartItemModel}>(CheckoutItem,() =>({dispatch: useDispatch(),}));

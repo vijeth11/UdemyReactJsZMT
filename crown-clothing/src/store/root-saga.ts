@@ -1,4 +1,4 @@
-import {all, call} from 'redux-saga/effects';
+import {all, call} from 'typed-redux-saga/macro';
 import { userSagas } from './user/user.saga';
 
 
@@ -9,5 +9,5 @@ import { userSagas } from './user/user.saga';
 // any saga has something to update  
 
 export function* rootSaga(){
-    yield all([call(userSagas)]);
+    yield* all([call(userSagas)]);
 }

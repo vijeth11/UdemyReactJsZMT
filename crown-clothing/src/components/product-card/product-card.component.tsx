@@ -1,11 +1,14 @@
-import { Component } from "react";
+import { Component, Dispatch } from "react";
 import { useDispatch } from "react-redux";
+import { AnyAction } from "redux";
 import { addCartItem } from "../../store/cart/cart.action";
+import { CategoryItem } from "../../store/cart/cart.types";
 import { withParams } from "../../utils/util/withParams.util";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import './product-card.style.scss';
+type ProductCardComponentProps = {dispatch:Dispatch<AnyAction>;productData:CategoryItem;}
 
-class ProductCardComponent extends Component{
+class ProductCardComponent extends Component<ProductCardComponentProps>{
 
     handleClick = () => {
         this.props.dispatch(addCartItem(this.props.productData));
@@ -26,4 +29,4 @@ class ProductCardComponent extends Component{
     }
 }
 
-export default withParams(ProductCardComponent, ()=>({dispatch: useDispatch()}));
+export default withParams<{},{productData:CategoryItem}>(ProductCardComponent, ()=>({dispatch: useDispatch()}));

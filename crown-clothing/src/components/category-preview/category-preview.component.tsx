@@ -1,8 +1,9 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
+import { CategoryItem } from "../../store/cart/cart.types";
 import ProductCardComponent from "../product-card/product-card.component";
 import './category-preview.style.scss';
-class CategoryPreview extends Component{
+class CategoryPreview extends Component<{title:string, products:CategoryItem[]}>{
     render(){
         const {title, products}  = this.props;
         return(

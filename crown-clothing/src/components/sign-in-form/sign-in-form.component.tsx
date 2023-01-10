@@ -1,19 +1,26 @@
-import { Component } from "react";
+import { AuthError, AuthErrorCodes } from "firebase/auth";
+import { ChangeEvent, Component, Dispatch, FormEvent } from "react";
 import { useDispatch } from "react-redux";
+import { AnyAction } from "redux";
 import { emailSignInStart, googleSignInStart } from "../../store/user/user.action";
 import { withParams } from "../../utils/util/withParams.util";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss';
 
-class SignInForm extends Component{
+type FormState = {
+    email:string;
+    password:string;
+}
+
+class SignInForm extends Component<{dispatch?:Dispatch<AnyAction>},FormState>{
     formInitialState = {
         email: '',
         password:'',
     };    
     
-    constructor(){
-        super();
+    constructor(){        
+        super({});
         this.state= {...this.formInitialState};
       }
 
@@ -22,7 +29,9 @@ class SignInForm extends Component{
     }
 
     signInWithGoogle = async() => {
-        this.props.dispatch(googleSignInStart())
+        if(this.props.dispatch){
+            this.props.dispatch(googleSignInStart())
+        }
     }
 
     // async componentDidMount() {
@@ -33,17 +42,19 @@ class SignInForm extends Component{
 
     // }
 
-    formSubmit = async (event) =>{
+    formSubmit = async (event:FormEvent<HTMLFormElement>) =>{
         event.preventDefault();
         try{
-            this.props.dispatch(emailSignInStart(this.state.email, this.state.password));
-            this.resetFormFields();
+            if(this.props.dispatch){
+                this.props.dispatch(emailSignInStart(this.state.email, this.state.password));
+                this.resetFormFields();
+            }
         }catch(error){
-            switch(error.code){
-                case 'auth/wrong-password':
+            switch((error as AuthError).code){
+                case AuthErrorCodes.INVALID_PASSWORD:
                     alert('incorrect password for email');
                     break;
-                case 'auth/user-not-found':
+                case AuthErrorCodes.USER_DELETED:
                     alert('no user associated with this email');
                     break;
                 default:
@@ -53,7 +64,7 @@ class SignInForm extends Component{
         
     }
 
-    handleChange=(event)=>{
+    handleChange=(event:ChangeEvent<HTMLInputElement>)=>{
         const {name, value} = event.target;
         this.setState({...this.state,[name]:value});
     }

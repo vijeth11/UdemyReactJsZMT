@@ -1,7 +1,8 @@
 import {Component} from 'react';
+import { DirectoryItemModel } from '../../store/cart/cart.types';
 import './directory-item.styles.scss';
 
-class DirectoryItem extends Component{
+class DirectoryItem extends Component<{category:DirectoryItemModel}>{
 
     render(){
         const category = this.props.category;

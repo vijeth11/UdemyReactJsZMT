@@ -1,10 +1,10 @@
 import { AnyAction } from "redux";
 import * as CARTACTIONS from "./cart.action" ;
-import { CategoryItem, CartItem } from "./cart.types";
+import { CategoryItem, CartItemModel } from "./cart.types";
 
 export type CartState = {
     readonly isCartOpen: boolean;
-    readonly cartItems: CartItem[];
+    readonly cartItems: CartItemModel[];
 }
 
 const INITIAL_STATE:CartState = {
@@ -12,8 +12,8 @@ const INITIAL_STATE:CartState = {
     cartItems: [],
 };
 
-const addCartItems = (cartItems: CartItem[], item: CategoryItem): CartItem[] => {
-    const existingCartItem = cartItems.find((cartItem:CartItem) => cartItem.id === item.id);
+const addCartItems = (cartItems: CartItemModel[], item: CategoryItem): CartItemModel[] => {
+    const existingCartItem = cartItems.find((cartItem:CartItemModel) => cartItem.id === item.id);
     if(existingCartItem){
         return cartItems.map((cartItem) => cartItem.id === item.id ? 
         {...cartItem, quantity:cartItem.quantity+1}: cartItem);
@@ -21,7 +21,7 @@ const addCartItems = (cartItems: CartItem[], item: CategoryItem): CartItem[] => 
     return [...cartItems, {...item,quantity:1}];
 }
 
-const removeCartItem = (cartItems:CartItem[], item: CategoryItem):CartItem[] => {
+const removeCartItem = (cartItems:CartItemModel[], item: CategoryItem):CartItemModel[] => {
     const existingCartItem = cartItems.find((cartItem) => cartItem.id === item.id);
     if(existingCartItem){
         if(existingCartItem.quantity > 1){
@@ -36,7 +36,7 @@ const removeCartItem = (cartItems:CartItem[], item: CategoryItem):CartItem[] => 
     }
 }
 
-const clearCartItem = (cartItems: CartItem[], item:CategoryItem):CartItem[] => [...cartItems.filter((cartItem)=> cartItem.id !== item.id)]
+const clearCartItem = (cartItems: CartItemModel[], item:CategoryItem):CartItemModel[] => [...cartItems.filter((cartItem)=> cartItem.id !== item.id)]
 
 export const cartReducer = (state= INITIAL_STATE, action:AnyAction):CartState => {
     if(CARTACTIONS.setIsCartOpen.match(action)){

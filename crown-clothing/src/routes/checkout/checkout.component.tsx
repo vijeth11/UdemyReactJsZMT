@@ -3,10 +3,11 @@ import { useSelector } from "react-redux";
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
 import PaymentForm from "../../components/payment-form/payment-form.component";
 import { selectCartItems, selectCartTotal } from "../../store/cart/cart.selector";
+import { CartItemModel } from "../../store/cart/cart.types";
 import { withParams } from "../../utils/util/withParams.util";
 import './checkout.style.scss';
 
-class Checkout extends Component{
+class Checkout extends Component<{cartItems:CartItemModel[],cartTotal:number}>{
 
     render(){
         const {cartItems, cartTotal}  = this.props;

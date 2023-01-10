@@ -1,12 +1,20 @@
-import { Component } from "react";
+import { AuthError, AuthErrorCodes } from "firebase/auth";
+import { ChangeEvent, Component, Dispatch, FormEvent } from "react";
 import { useDispatch } from "react-redux";
+import { AnyAction } from "redux";
 import { signUpStart } from "../../store/user/user.action";
 import { withParams } from "../../utils/util/withParams.util";
 import Button from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
 import './sign-up-form.styles.scss';
+type SignUpFormState = {
+    displayName:string;
+    email:string;
+    password:string;
+    confirmPassword:string;
+}
 
-class SignUpForm extends Component{
+class SignUpForm extends Component<{dispatch?: Dispatch<AnyAction>},SignUpFormState>{
     formInitialState = {
         displayName: '',
         email: '',
@@ -15,7 +23,7 @@ class SignUpForm extends Component{
     };
 
     constructor(){
-        super();
+        super({});
         this.state= {...this.formInitialState};
       }
 
@@ -23,16 +31,18 @@ class SignUpForm extends Component{
         this.setState({...this.formInitialState});
     }
 
-    formSubmit = async (event) =>{
+    formSubmit = async (event:FormEvent<HTMLFormElement>) =>{
         event.preventDefault();
         if(this.state.password === this.state.confirmPassword){      
             try{  
             // const {user} =  await creatAuthUserWithEmailAndPassword({email:this.state.email, password:this.state.password});
-            // await createUserDocumentFromAuth(user,{displayName:this.state.displayName});  
-            this.props.dispatch(signUpStart(this.state.email,this.state.password,this.state.displayName));          
+            // await createUserDocumentFromAuth(user,{displayName:this.state.displayName}); 
+            if(this.props.dispatch){ 
+                this.props.dispatch(signUpStart(this.state.email,this.state.password,this.state.displayName)); 
+            }         
             this.resetFormFields();
             }catch(error){
-                if(error.code === 'auth/email-already-in-use'){
+                if((error as AuthError).code === AuthErrorCodes.EMAIL_EXISTS){
                     alert('Cannot create user, email already in use');
                 }else{
                     console.log("Fail to login", error);
@@ -44,7 +54,7 @@ class SignUpForm extends Component{
         }
     }
 
-    handleChange=(event)=>{
+    handleChange=(event:ChangeEvent<HTMLInputElement>)=>{
         const {name, value} = event.target;
         this.setState({...this.state,[name]:value});
     }
