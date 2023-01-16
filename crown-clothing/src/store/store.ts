@@ -47,7 +47,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const logger = createLogger();
 
-const middleWares = process.env.NODE_ENV === 'development'? [logger, loggerMiddleware, thunk, sagaMiddleware] : [];
+const middleWares = process.env.NODE_ENV === 'development'? [logger, loggerMiddleware, thunk, sagaMiddleware] : [thunk, sagaMiddleware];
 
 // telling browser to use Redux Devtools if it exsits for looking at changes if not use regular compose 
 const composeEnhancer = (process.env.NODE_ENV === 'development' && window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
