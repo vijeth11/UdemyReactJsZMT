@@ -1,6 +1,7 @@
-import { Component, Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import ProductCardComponent from "../../components/product-card/product-card.component";
+import Spinner from "../../components/spinner/spinner.component";
 import { CategoriesContext } from "../../context/categories.context";
 import { CategoryItem } from "../../store/cart/cart.types";
 import { withParams } from "../../utils/util/withParams.util";
@@ -10,37 +11,39 @@ type CategoryRouteParams = {
     category:string;
 }
 
-class Category extends Component<{params?:CategoryRouteParams},{products:CategoryItem[]}>{
+class Category extends Component<{params?:CategoryRouteParams},{}>{
     category:string = '';
-
-    constructor(){
-        super({});
-        this.state = {
-            products:[]
-        };
-    }
+    static contextType = CategoriesContext;
+    context!:React.ContextType<typeof CategoriesContext>;
 
     componentDidMount(){
         this.category = this.props.params?.category ?? '';
-        const {categoriesMap} = this.context;
-        this.setState({products:categoriesMap[this.category]});
+        // to call render once the category is set from params
+        this.setState({});
     }
+
     render(){        
-        const {products} = this.state;
+        const {categoriesMap, loading} = this.context;
+        const products:CategoryItem[] = this.category.length > 0 ? categoriesMap[this.category]: [];
         return (
             <Fragment>
-                <h2 className="category-title">{this.category && this.category.toUpperCase()}</h2>
-                <div className="category-container">
-                    
-                    {
-                        products && products.map(
-                            (product:CategoryItem) => <ProductCardComponent key={product.id} productData={product}/>
-                            )
-                    }
-                </div>
+                { 
+                loading ? <Spinner/>:
+                <Fragment>
+                    <h2 className="category-title">{this.category && this.category.toUpperCase()}</h2>
+                    <div className="category-container">
+                        
+                        {
+                            products && products.map(
+                                (product:CategoryItem) => <ProductCardComponent key={product.id} productData={product}/>
+                                )
+                        }
+                    </div>
+                </Fragment>
+                }
             </Fragment>
         );
     }
 }
-Category.contextType = CategoriesContext;
+
 export default withParams(Category,()=>({params:useParams<keyof CategoryRouteParams>() as CategoryRouteParams}));
