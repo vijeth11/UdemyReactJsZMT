@@ -24,31 +24,35 @@ query {
 }
 `
 
-export const CategoriesProvider:FC =  ({children}) => {
-    const {loading, error, data} = useQuery(COLLECTIONS);
-    console.log(data);
+export const CategoriesProvider:FC =  ({children}) => {   
     const [categoriesMap, setCategoriesMap] = useState({categoriesMap:{}});
+
     // getting data using GraphQL
-    useEffect(() => {
-        if(data){
-            const {collections} = data;
-            const collectionMap:{[title: string]: CategoryItem[]} = collections.reduce((acc:{[key:string]:CategoryItem[]}, collection:{id:string, title:string, items:CategoryItem[]}) => {
-                const {title, items}  = collection;
-                acc[title.toLowerCase()] = items;
-                return acc;
-            },{});
-            setCategoriesMap({categoriesMap:collectionMap});
-        }
-    }, [data]);
+    
+    // const {loading, error, data} = useQuery(COLLECTIONS);
+    // console.log(data);
+
+    // useEffect(() => {
+    //     if(data){
+    //         const {collections} = data;
+    //         const collectionMap:{[title: string]: CategoryItem[]} = collections.reduce((acc:{[key:string]:CategoryItem[]}, collection:{id:string, title:string, items:CategoryItem[]}) => {
+    //             const {title, items}  = collection;
+    //             acc[title.toLowerCase()] = items;
+    //             return acc;
+    //         },{});
+    //         setCategoriesMap({categoriesMap:collectionMap});
+    //     }
+    // }, [data]);
     
     // code to get data from Firebase
-    // useEffect(()=>{
-    //     const getCategoriesMap = async ()=>{
-    //         const categoriesMap = await getCategoriesAndDocuments();
-    //         setCategoriesMap({categoriesMap});
-    //     }
-    //     getCategoriesMap();
-    // },[]);
+    let loading = false;
+    useEffect(()=>{
+        const getCategoriesMap = async ()=>{
+            const categoriesMap = await getCategoriesAndDocuments();
+            setCategoriesMap({categoriesMap});
+        }
+        getCategoriesMap();
+    },[]);
     const value = {...categoriesMap, loading};
     return <CategoriesContext.Provider value={value} >{children}</CategoriesContext.Provider>
 }
