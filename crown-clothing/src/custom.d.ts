@@ -6,5 +6,5 @@ declare module "*.svg" {
 }
 
 
-// Type sctrip needs this module declaration for accpting svg icons
+// Type script needs this module declaration for accepting svg icons
 // this is added in tsconfig file in includes

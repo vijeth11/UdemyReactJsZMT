@@ -2,13 +2,13 @@ import {compose, createStore, applyMiddleware} from 'redux';
 import { persistStore, persistReducer, PersistConfig } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 
 import { rootReducer } from './root-reducer';
 import { loggerMiddleware } from '../middleware/logger-middleware';
 import { rootSaga } from './root-saga';
+import { createLogger } from 'redux-logger';
 
 // middlewares in store enhances the state by catching actions before 
 // the reducer is called. It is used to log or modify store. 
@@ -44,6 +44,8 @@ export type RootState = ReturnType<typeof rootReducer>;
 const sagaMiddleware = createSagaMiddleware();
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const logger = createLogger();
 
 const middleWares = process.env.NODE_ENV === 'development'? [logger, loggerMiddleware, thunk, sagaMiddleware] : [];
 
