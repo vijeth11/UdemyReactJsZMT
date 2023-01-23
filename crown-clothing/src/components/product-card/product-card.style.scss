@@ -48,5 +48,40 @@
         width: 10%;
       }
     }
+
+    @media screen and (max-width : 800px) {
+      width: 40vw;
+      
+      button {
+        display: block;
+        opacity: 0.9;
+        min-width: unset;
+        padding: 0 5px;
+      }
+
+      &:hover {
+        img {
+          opacity: unset;
+        }
+    
+        button {
+          opacity: unset;
+        }
+      }
+
+      .footer{
+        height: 10%;
+        .name{
+          width: unset;
+        }
+
+        .price{
+          width: unset;
+        }
+      }
+
+    }
   }
+
+
   

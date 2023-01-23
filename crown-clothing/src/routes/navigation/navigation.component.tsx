@@ -28,7 +28,8 @@ class Navigation extends Component<{dispatch:Dispatch<AnyAction>,currentUser:Use
                 <CrownLogo className="logo"></CrownLogo>
             </LogoContainer>
             <NavLinks>
-                <NavLink to='/shop'>Shop</NavLink>
+                <NavLink to='/shop'>SHOP</NavLink>
+                <NavLink to='/shop'>CONTACT</NavLink>
                 {
                   currentUser ? (<NavLink as='span' onClick={this.handleSignOut}>SIGN OUT</NavLink>):
                   (<NavLink to='/auth'>SIGN IN</NavLink>)
