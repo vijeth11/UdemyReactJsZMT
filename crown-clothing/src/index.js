@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {BrowserRouter} from 'react-router-dom';
-import './index.scss';
 import App from './App';
 import { Provider } from 'react-redux';
 import { UserProvider } from './context/user.context';
@@ -13,6 +12,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { Elements } from '@stripe/react-stripe-js';
 import { stripePromise } from './utils/stipe/stripe.utils';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const  client = new ApolloClient({
   uri: 'https://crwn-clothing.com/',
@@ -46,7 +46,7 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-
+serviceWorkerRegistration.register();
 // ApolloProvider is used to connect to the GraphQL server it requires client 
 // client contains the end point URL and cache for caching data if there is no 
 // change. GraphQL has single endpoint URL with multiple query types defined by the backend
