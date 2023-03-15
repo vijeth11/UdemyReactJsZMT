@@ -6,18 +6,23 @@ import { SearchInput } from './component/search-box/search-box.component';
 import { ChangeEvent, Component } from 'react';
 import { CardList } from './component/card-list/card-list.component';
 
-const mockData:Monster[] = [
-    {
-        email:"test@test.com",
-        id:"1",
-        name:"test"
-    },
-    {
-        email:"test1@test.com",
-        id:"2",
-        name:"test2"
-    }
-]
+let mockData:Monster[];
+
+beforeEach(() => {
+    mockData = [
+        {
+            email:"test@test.com",
+            id:"1",
+            name:"test"
+        },
+        {
+            email:"test1@test.com",
+            id:"2",
+            name:"test2"
+        }
+    ]
+})
+
 
 it("initial test",() => {
     expect(shallow(<App/>)).toMatchSnapshot();
